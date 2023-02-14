@@ -38,10 +38,7 @@ public class generateEnviroment : MonoBehaviour
         {
             //Makes sure the initial path is not recorded in the string list 
             string directoryName = Path.GetDirectoryName(directory);
-            if (!directoryName.Equals(directoryPath))
-            {
-                filesAndDirectories.Add(Path.GetFileName(directory));
-            }
+            filesAndDirectories.Add(Path.GetFileName(directory));
         }
 
         foreach (string file in files)
