@@ -12,11 +12,17 @@ public class generateEnviroment : MonoBehaviour
     public GameObject parent;
     public GridObjectCollection collection;
 
-    public Dictionary<string, GameObject> buttons = new Dictionary<string, GameObject>();
-
+    private Dictionary<string, GameObject> buttons = new Dictionary<string, GameObject>();
+    private Dictionary<string, bool> buttonPressedDictionary = new Dictionary<string, bool>();
 
     //Path to read from, will changed to be read from a config file
     public string directoryPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+
+    //Yet to be implemented, will clear all dictionaries and reload the current directory to the new one
+    void EnterNewDicrectory()
+    {
+
+    }
 
     //Returns a string list of every folder and file in the selected directroy
     public List<string> GetFilesAndDirectories(string directoryPath)
@@ -69,6 +75,36 @@ public class generateEnviroment : MonoBehaviour
         collection.UpdateCollection();
     }
 
+    //Loops the buttons in the dictionary and checks whether each has been pressed
+    void checkButtonStatus()
+    {
+        foreach (KeyValuePair<string, GameObject> buttonPair in buttons)
+        {
+            //Gets the Interactable component for the current string, GameObject pair
+            Interactable buttonComponent = buttonPair.Value.GetComponent<Interactable>();
+
+            if (buttonComponent != null)
+            {
+                //Boolean dictionary updated to false to remove the possibility for repeat clicks during one click event
+                buttonPressedDictionary[buttonPair.Key] = false;
+                //Starts a new event listener for the button
+                buttonComponent.OnClick.AddListener(() => ButtonClicked(buttonPair.Key));
+            }
+        }
+    }
+
+    //Event listener
+    private void ButtonClicked(string buttonName)
+    {
+        //Negates multiple recorded clicks from one click event
+        if (!buttonPressedDictionary[buttonName])
+        {
+            buttonPressedDictionary[buttonName] = true;
+            //Debug due to no implemented functionality
+            Debug.Log(buttonName + " button has been pressed.");
+        }
+    }
+
     void Start()
     {
         //Runs the files and directories function and saves the return in a string list
@@ -111,6 +147,7 @@ public class generateEnviroment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Search("Microsoft");
+        //Search("Microsoft");
+        checkButtonStatus();
     }
 }
