@@ -20,18 +20,21 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Simplyfied.unity
     guid: 576140cf57899934eb5e016ec31814ed
   - enabled: 0
     path: Assets/Scenes/VuforiaSimplyfied.unity
     guid: dc02f9a16a9342345b8984c249bb48dd
   - enabled: 0
-    path: Assets/WorldLocking.ASA.Examples/Scenes/PinTestSofa.unity
-    guid: cbb1de1abeaa6f149a3b118ab18fc463
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
-    path: Assets/Scenes/Simplified_WLT_ASA.unity
-    guid: e7e96c20591500149a97d658de42747d
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/ScrollListObject.unity
+    guid: 3dbf60a19dc889544b8b106c3f66231a
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3d16cd16d4e39c2468c7b6a3d5dcd8a1, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: fd024c778d0bedd44b1a972547cc255e, type: 2}
