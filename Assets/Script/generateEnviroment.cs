@@ -12,6 +12,9 @@ public class generateEnviroment : MonoBehaviour
     public GameObject parent;
     public GridObjectCollection collection;
 
+    public Dictionary<string, GameObject> buttons = new Dictionary<string, GameObject>();
+
+
     //Path to read from, will changed to be read from a config file
     public string directoryPath = @"C:\Users\Axel\Desktop\DeromeTruss";
 
@@ -48,11 +51,31 @@ public class generateEnviroment : MonoBehaviour
 
         return filesAndDirectories;
     }
+
+    void Search(string searchTerm)
+    {
+        //Iterates over the keys and checks whether each key contains
+        //the search term, if it does not contain the gameobject behind
+        //said key is deactivated, else its activated
+        foreach (string name in buttons.Keys)
+        {
+            if (!name.Contains(searchTerm))
+            {
+                buttons[name].SetActive(false);
+            }
+            else
+            {
+                buttons[name].SetActive(true);
+            }
+        }
+        collection = parent.GetComponent<GridObjectCollection>();
+        collection.UpdateCollection();
+    }
+
     void Start()
     {
         //Runs the files and directories function and saves the return in a string list
         List<string> filesAndDirectories = GetFilesAndDirectories(directoryPath);
-
 
         foreach (string name in filesAndDirectories)
         {
@@ -78,7 +101,7 @@ public class generateEnviroment : MonoBehaviour
                     tmpComponent.text = name;
                 }
             }
-            
+            buttons.Add(name, newItem);
         }
 
 
@@ -91,6 +114,6 @@ public class generateEnviroment : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Search("Microsoft");
     }
 }
