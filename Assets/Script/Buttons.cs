@@ -7,30 +7,36 @@ using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using TMPro;
 
-namespace Buttons
+namespace Buttons   
 {
     class ButtonHandler : MonoBehaviour
     {
-        GameObject prefab;
-        GameObject parent;
-        string directoryPath;
-
+        private GameObject prefab;
+        private GameObject parent;
+        private string directoryPath;
         private GridObjectCollection collection;
 
+        //Directory for each button with its name as key
         private Dictionary<string, button> buttons = new Dictionary<string, button>();
-
+        
+        /*Generates dictionary of button class objects, one for each file or folder in directory
+         * First check whether the given directroy is valid, else returns error and null
+         * Generates string arrays, one containing files and one for directories
+         * 
+         * Loops through directories and files arrays, respectively, adds definitions in
+         * the directory for each string in the array and creates a button object where
+         * path and type is set acoordingily
+         */
         private Dictionary<string, button> GetFilesAndDirectories(string directoryPath)
         {
             Dictionary<string, button> filesAndDirectories = new Dictionary<string, button>();
 
-            //If the path happens to be invalid
             if (!Directory.Exists(directoryPath))
             {
                 Debug.LogError("Invalid path");
                 return null;
             }
 
-            //One string array for directories and one for files
             string[] directories = Directory.GetDirectories(directoryPath);
             string[] files = Directory.GetFiles(directoryPath);
 
@@ -53,22 +59,52 @@ namespace Buttons
             return filesAndDirectories;
         }
 
+        //Updates the grid collection, is called on visible changes
         public void updateCollection()
         {
-            //Updates the grid collection
             collection = parent.GetComponent<GridObjectCollection>();
             collection.UpdateCollection();
         }
+
+        //Sets the active state of all gameObjects the current object of this class governs over
+        //used when going between dictionaries, called from generateEnviroment.cs
         public void setActive(bool activity)
         {
             foreach (button thisButton in buttons.Values)
                 thisButton.Button.SetActive(activity);
+
+            updateCollection();
         }
-        public string buttonStatus()
+
+        //Simple search function, called from generateEnviroment.cs, changes each gameObject button
+        //state acoordingly to whether it conforms to searchTerm or not
+        public void search(string searchTerm)
         {
             foreach (KeyValuePair<string, button> buttonPair in buttons)
             {
-                //Gets the Interactable component for the current string, GameObject pair
+                if (!buttonPair.Key.Contains(searchTerm))
+                    buttonPair.Value.Button.SetActive(false);
+
+                else
+                    buttonPair.Value.Button.SetActive(true);
+            }
+            updateCollection();
+        }
+
+        /*Called to from generateEnviroment.cs checking whether a button has been pressed
+        *returns a dictionary of values concering the pressed button, else null
+        *
+        *Loops each keyValuePair and gets the gameObject component containing the button
+        *if the component is not null the "Pressed" value of the button is set false and a
+        *new event listener is started for the button, instance of ButtonClicked.
+        *
+        *If there is a difference in the "latesteClickedButtonName" and "lastReturn" strings, do 
+        *a new return of dict containing name, type and path.
+        */
+        public Dictionary<string, string> buttonStatus()
+        {
+            foreach (KeyValuePair<string, button> buttonPair in buttons)
+            {
                 Interactable buttonComponent = buttonPair.Value.Button.GetComponent<Interactable>();
 
                 if (buttonComponent != null)
@@ -83,8 +119,13 @@ namespace Buttons
             // Return the button name of the last clicked button
             if (lastClickedButtonName != lastReturn)
             {
+                Dictionary<string, string> returnDict = new Dictionary<string, string>();
+                returnDict.Add("Name", lastClickedButtonName);
+                returnDict.Add("Type", buttons[lastClickedButtonName].Type);
+                returnDict.Add("Path", buttons[lastClickedButtonName].Path);
+
                 lastReturn = lastClickedButtonName;
-                return lastClickedButtonName;
+                return returnDict;
             }
             else
                 return null;
@@ -100,15 +141,18 @@ namespace Buttons
             if (!buttons[buttonName].Pressed)
             {
                 buttons[buttonName].Pressed = true;
-                //Debug due to no implemented functionality
-                Debug.Log(buttonName + " button has been pressed.");
 
                 // Set the last clicked button name
                 lastClickedButtonName = buttonName;
             }
         }
 
-
+        /* Calls GetFilesAndDirectories tot generate intial dict of "button" class objects
+         * 
+         * Loops the keys and creates a gameObject of a prefab where its "TextMeshPro" component
+         * text variable is set to the buttons name, the gameObject property of the button class instance
+         * is then set to new gameObject 
+         */
         private void setup()
         {
             buttons = GetFilesAndDirectories(directoryPath);
@@ -141,6 +185,7 @@ namespace Buttons
             }
         }
 
+        //Constructor
         public ButtonHandler(string Path, GameObject Parent, GameObject Prefab)
         {
             directoryPath = Path;
