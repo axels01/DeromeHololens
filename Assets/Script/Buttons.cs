@@ -13,7 +13,7 @@ namespace Buttons
     {
         private GameObject prefab;
         private GameObject parent;
-        private string directoryPath;
+        public string directoryPath { get; }
         private GridObjectCollection collection;
 
         //Directory for each button with its name as key
