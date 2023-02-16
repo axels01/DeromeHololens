@@ -9,6 +9,10 @@ using TMPro;
 
 namespace ButtonManager
 {
+    /*Class PressState, to make sure multiple clicks aren't recorded
+    from one click event. Workaround due to issue explained above
+    buttonManagerBuildr function in buttonManager class bellow.
+    */
     public class PressState
     {
         public bool isPressed = false;
@@ -22,12 +26,13 @@ namespace ButtonManager
             isPressed = true;
         }
     }
+    
     public class buttonManager : MonoBehaviour
     {
         public GameObject button { get; set; }
         public bool isPressed = false;
 
-        //Checker
+        //Function called from instance intiator to check if button has been pressed, returns bool.
         public bool pressed(PressState pressState)
         {
             bool result = pressState.isPressed;
@@ -37,6 +42,9 @@ namespace ButtonManager
             return result;
         }
 
+        /*Attaches a listener to the Interactable of the gameObject, runs function in 
+        pressState class on press event due to issue explained bellow. 
+        */
         private void attachListener(PressState pressState)
         {
             Interactable interactable = button.GetComponent<Interactable>();
@@ -46,18 +54,26 @@ namespace ButtonManager
                 interactable.OnClick.AddListener(() => pressState.SetPressed());
             }
         }
-
-        /*Issue with changing value of local variable from AddListener line thus the workaround
-        *With using a fake constructor
+        
+        /*Fake constructor for instance of buttonManager class. Can be used to create a new 
+        button from prefab and provided information or to only assign a listener to an already
+        existing button.
+        
+        The constructor is fake due to issues with regards to accessing local variables from 
+        Addlistner event. This is a workaround and should be updated to make the constructor a real one.
+        
+        Information regarind the issue:
         https://forum.unity.com/threads/onclick-addlistener-with-a-string-parameter.892210/
-        Constructor, parent and name set to defaut null, used when only used to check on button presses
-        and not creating a new button object from prefab*/
+        
+        First if-statement only attaches listener, for already created button.
+        Second if-statement creates a new button GameObject from prefab and a name under a parent gameObject.
+        Includes some error catching aswell.
+        */
         public PressState buttonManagerBuilder(GameObject gameObject, GameObject parent = null, string name = null)
         {
             PressState pressState = new PressState();
             if (parent == null && name == null)
             {
-                // Runs when first argument is an already created button, used when only "press checking" is needed
                 button = gameObject;
                 attachListener(pressState);
             }
@@ -86,7 +102,9 @@ namespace ButtonManager
                     attachListener(pressState);
                 }
             }
-
+            /*Returns the instance of pressState to caller of this fake constructor, used to check
+            whether this button has been pressed or not.
+            */
             return (pressState);
         }
     }
