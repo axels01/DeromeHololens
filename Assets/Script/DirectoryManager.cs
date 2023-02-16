@@ -14,15 +14,15 @@ namespace DirectoryManager
     {
         private GameObject prefab;
         private GameObject parent;
-        public string directoryPath { get; }
         private GridObjectCollection collection;
-
-        //Directory for each button with its name as key
+        
+        public string directoryPath { get; }
         private List<button> thisDirectory = new List<button>();
 
-        //Loops the buttonManager instances for all the buttons and
-        //checks whether any one of them have been pressed, will return
-        //dict of name and type to caller
+        /*Loops the buttonManager instances for all the buttons and
+        checks whether any one of them have been pressed, will return
+        dict of name, type and path to caller, else returns null.
+        */
         public Dictionary<string, string> buttonStatus()
         {
             Dictionary<string, string> returnDict = new Dictionary<string, string>();
@@ -46,7 +46,8 @@ namespace DirectoryManager
             collection = parent.GetComponent<GridObjectCollection>();
             collection.UpdateCollection();
         }
-
+            
+        //Changes setActive for all button GameObjects
         public void setActive(bool activity)
         {
             foreach (button button in thisDirectory)
@@ -55,8 +56,9 @@ namespace DirectoryManager
             updateCollection();
         }
 
-        //Simple search function, called from generateEnviroment.cs, changes each gameObject button
-        //state acoordingly to whether it conforms to searchTerm or not
+        /*Simple search function, called from generateEnviroment.cs, changes each gameObject button
+        setActive acoordingly to whether it conforms to searchTerm or not.
+        */
         public void search(string searchTerm)
         {
             foreach (button button in thisDirectory)
@@ -69,9 +71,10 @@ namespace DirectoryManager
             updateCollection();
         }
 
-        //Generates button class instances and adds them to a temporary list,
-        //one instance per file and subdirectory in directory, adds relevant
-        //informtion to said instances, type, name and path
+        /*Generates button class instances and adds them to a temporary list,
+        one instance per file and subdirectory in directory, adds relevant
+        informtion to instances, type, name and path.
+        */
         private List<button> getFilesAndDirectories(string directoryPath)
         {
             List<button> filesAndDirectories = new List<button>();
@@ -105,30 +108,38 @@ namespace DirectoryManager
             return filesAndDirectories;
         }
 
-        //Constructor
+        /*Constructor
+        Calls getFielsAndDirectories with relevant path, return is stored in
+        thisDirectory, list of instances of button class. Loops all buttons in the
+        generated list, gives each a new buttonManager instance, also assigns 
+        button.PressState with new intsance of PressState, this is done via a fake
+        constructor buttonManagerBuilder inside of instance of buttonManager, this 
+        due to issues with regards to accessing local variables from Addlistner event.
+        This is a workaround and should be updated to make the constructor a real one.
+        
+        Information regarind the issue:
+        https://forum.unity.com/threads/onclick-addlistener-with-a-string-parameter.892210/
+        */
         public directortManager(string Path, GameObject Parent, GameObject Prefab)
         {
             directoryPath = Path;
             parent = Parent;
             prefab = Prefab;
             Debug.Log("Setup");
-
-            //Generates instances of local class button with relevant information
+            
             thisDirectory = getFilesAndDirectories(directoryPath);
-            //Loops thisDirectory list of button class instances and initiates instances of
-            //buttonManager for Button property button
 
             foreach (button button in thisDirectory)
-            {
-                /*Issue with changing value of local variable from AddListener line thus the workaround
-                *With using a fake constructor
-                https://forum.unity.com/threads/onclick-addlistener-with-a-string-parameter.892210/*/
+            {                
                 button.Button = new buttonManager();
                 button.PressState = button.Button.buttonManagerBuilder(prefab, parent, button.Name);
             }
+            
             Debug.Log("DM constrctur done");
         }
     }
+    
+    //button datatype, used locally.
     class button
     {
         public string Name { get; set; }
