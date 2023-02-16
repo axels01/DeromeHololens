@@ -89,7 +89,11 @@ public class FileSelector : MonoBehaviour
             if (buttons[backButton].buttonManager.pressed(buttons[backButton].pressState))
             {
                 Debug.Log("Back!");
-                if (pathHistory.Count != 0)
+                if (pathHistory.Count == 0)
+                {
+                    currentDirectory = startDirectory;
+                }
+                else
                 {
                     currentDirectory.setActive(false);
                     currentDirectory = new directortManager(pathHistory.Pop().ToString(), parent, prefab);
@@ -118,6 +122,18 @@ public class FileSelector : MonoBehaviour
                     {
                         mainUI.SetActive(false);
                         useFileScreen.SetActive(true);
+                        Transform child = useFilePrompt.transform.Find("IconAndText");
+                        Transform tmpObject = child.transform.Find("TextMeshPro");
+                        if (child == null || tmpObject == null)
+                            Debug.LogError("Child not found");
+                        else
+                        {
+                            TextMeshPro tmpComponent = tmpObject.GetComponent<TextMeshPro>();
+                            if (tmpComponent == null)
+                                Debug.LogError("No TextMeshPro component found");
+                            else
+                                tmpComponent.text = "Use file: " + directoryButton["Name"] + "?";
+                        }
                     }
                 }
 
