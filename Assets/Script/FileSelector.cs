@@ -29,7 +29,9 @@ public class FileSelector : MonoBehaviour
     public GameObject useFileScreen;
 
     //Not DXF view objects.
+    public GameObject notDXFPrompt;
     public GameObject continueButton;
+    public GameObject notDXFScreen;
 
     /*Instances of directoryManager, only keeps current and start alive due to 
     this projects application. If you want to keep multiple instances of currentDirectory
@@ -49,10 +51,11 @@ public class FileSelector : MonoBehaviour
         uiButtons.add(backButton, "Back");
         uiButtons.add(noButton, "No");
         uiButtons.add(yesButton, "Yes");
-        uiButtons.add(continueButton, "Contuine");
+        uiButtons.add(continueButton, "Continue");
 
         //Sets the correct UI screen/view visible.
         useFileScreen.SetActive(false);
+        notDXFScreen.SetActive(false);
         mainUI.SetActive(true);
 
         /*Starts an instance of directoryManager for the start directory which is kept alive
@@ -63,9 +66,9 @@ public class FileSelector : MonoBehaviour
         currentDirectory = startDirectory;       
     }
 
-    void updatePrompt(string text)
+    void updatePrompt(GameObject prompt ,string text)
     {
-        Transform child = useFilePrompt.transform.Find("IconAndText");
+        Transform child = prompt.transform.Find("IconAndText");
         Transform tmpObject = child.transform.Find("TextMeshPro");
         if (child == null || tmpObject == null)
             Debug.LogError("Child not found");
@@ -94,7 +97,9 @@ public class FileSelector : MonoBehaviour
                     Debug.Log("Back!");
                     if (pathHistory.Count == 0)
                     {
-                        currentDirectory = startDirectory;
+                        currentDirectory.setActive(false);
+                        currentDirectory = new directortManager(startPath, parent, prefab);
+                        currentDirectory.setActive(true);
                     }
                     else
                     {
@@ -115,26 +120,22 @@ public class FileSelector : MonoBehaviour
                 updated path. Set setActive true for the new view.
                 */
                 Dictionary<string, string> directoryButton = currentDirectory.buttonStatus();
-
                 if (directoryButton != null)
                 {
+                    Debug.Log(directoryButton["Name"]);
                     if (directoryButton["Type"] == "file")
                     {
                         mainUI.SetActive(false);
                         if (directoryButton["Name"].EndsWith(".dxf", true, null))
                         {
                             useFileScreen.SetActive(true);
-                            continueButton.SetActive(true);
-                            updatePrompt("Open file \"" + directoryButton["Name"] + "\"?");
+                            updatePrompt(useFilePrompt, "Open file \"" + directoryButton["Name"] + "\"?");
                             screen = "useFile";
                         }
                         else
                         {
-                            useFileScreen.SetActive(true);
-                            continueButton.SetActive(true);
-                            yesButton.SetActive(false);
-                            noButton.SetActive(false);
-                            updatePrompt("File is not .dxf!");
+                            notDXFScreen.SetActive(true);
+                            updatePrompt(notDXFPrompt, "File is not .dxf!");
                             screen = "notDXF";
                         }
                     }
@@ -155,6 +156,7 @@ public class FileSelector : MonoBehaviour
                     Debug.Log("no");
                     useFileScreen.SetActive(false);
                     mainUI.SetActive(true);
+                    screen = "main";
                 }
                 if (uiButtons.update() == "Yes")
                 {
@@ -164,8 +166,9 @@ public class FileSelector : MonoBehaviour
             case "notDXF":
                 if (uiButtons.update() == "Continue")
                 {
-                    useFileScreen.SetActive(false);
+                    notDXFScreen.SetActive(false);
                     mainUI.SetActive(true);
+                    screen = "main";
                 }
                 break;
         }
