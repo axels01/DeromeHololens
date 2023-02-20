@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
+using Microsoft.MixedReality.Toolkit.Experimental.UI;
 using TMPro;
 using ButtonManager;
 using DirectoryManager;
@@ -18,6 +19,9 @@ public class FileSelector : MonoBehaviour
     public GameObject mainUI;
     public GameObject parent;
     public GameObject backButton;
+    public GameObject keyboard;
+    public MixedRealityKeyboard keyboardComponent;
+    public GameObject toggleKeyboard;
     public GameObject searchField;
     public GameObject searchButton;
     public GridObjectCollection collection;
@@ -48,10 +52,13 @@ public class FileSelector : MonoBehaviour
     //Initializer, runs once.
     void Start()
     {
+        keyboardComponent = keyboard.GetComponent<MixedRealityKeyboard>();
+
         uiButtons.add(backButton, "Back");
         uiButtons.add(noButton, "No");
         uiButtons.add(yesButton, "Yes");
         uiButtons.add(continueButton, "Continue");
+        uiButtons.add(toggleKeyboard, "ToggleKeyboard");
 
         //Sets the correct UI screen/view visible.
         useFileScreen.SetActive(false);
@@ -92,7 +99,17 @@ public class FileSelector : MonoBehaviour
             it cant go back past the start directroy. Sets the old instance of DirectoryManager
             to unactive before assigning currentDirectory a new instance of DirectoryManager.
             */
-                if (uiButtons.update() == "Back")
+                string btn = uiButtons.update();
+                if (btn == "ToggleKeyboard")
+                {
+                    Debug.Log("Keyboard :)");
+                    if (!keyboardComponent.Visible)
+                        keyboardComponent.ShowKeyboard("", false);
+                    else
+                        keyboardComponent.HideKeyboard();
+                }
+
+                else if (btn == "Back")
                 {
                     Debug.Log("Back!");
                     if (pathHistory.Count == 0)
@@ -108,7 +125,6 @@ public class FileSelector : MonoBehaviour
                         currentDirectory.setActive(true);
                     }
                 }
-
                 /*Runs buttonStatus of DirectoryManager currently assigned to currentDirectory
                 to check whether a button has been pressed, returns dict which is captured in dirctoryButton.
                 Checks whether file or directory, 
@@ -120,7 +136,7 @@ public class FileSelector : MonoBehaviour
                 updated path. Set setActive true for the new view.
                 */
                 Dictionary<string, string> directoryButton = currentDirectory.buttonStatus();
-                if (directoryButton != null)
+                if (directoryButton != null)    
                 {
                     Debug.Log(directoryButton["Name"]);
                     if (directoryButton["Type"] == "file")
