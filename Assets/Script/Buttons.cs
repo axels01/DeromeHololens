@@ -1,3 +1,12 @@
+/*
+ * 2023 Axel Östergren
+ * axel.ostergren@student.hv.se
+ * 
+ * 
+ * This script is deprecated, see ButtonManager.cs and DirectoryManager.cs.
+ */
+
+
 using System;
 using System.IO;
 using System.Collections;

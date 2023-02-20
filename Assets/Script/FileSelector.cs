@@ -1,3 +1,10 @@
+/*
+ * 2023 Axel Östergren
+ * axel.ostergren@student.hv.se
+ */
+
+
+
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;

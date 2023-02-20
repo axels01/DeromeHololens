@@ -1,3 +1,12 @@
+/*
+ * 2023 Axel Östergren
+ * axel.ostergren@student.hv.se
+ * 
+ * 
+ * This script is deprecated, see FileSelector.cs and ViewManager.cs.
+ */
+
+
 using System.IO;
 using System.Collections;
 using System.Collections.Generic;
