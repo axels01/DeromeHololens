@@ -67,12 +67,28 @@ namespace DirectoryManager
         */
         public void search(string searchTerm)
         {
-            foreach (button button in thisDirectory)
-            {
-                if (!button.Name.Contains(searchTerm))
+            Debug.Log("Searchterm *" + searchTerm +"*");
+            if (searchTerm == "" || searchTerm == null)
+            { 
+                foreach (button button in thisDirectory)
+                {
                     button.Button.button.SetActive(false);
-                else
+                }
+                updateCollection();
+                foreach (button button in thisDirectory)
+                {
                     button.Button.button.SetActive(true);
+                }
+            }
+            else
+            {
+                foreach (button button in thisDirectory)
+                {
+                    if (!button.Name.ToUpper().StartsWith(searchTerm.ToUpper()))
+                        button.Button.button.SetActive(false);
+                    else
+                        button.Button.button.SetActive(true);
+                }
             }
             updateCollection();
         }

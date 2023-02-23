@@ -9,6 +9,8 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using Microsoft.MixedReality.Toolkit.UI;
 using Microsoft.MixedReality.Toolkit.Utilities;
 using Microsoft.MixedReality.Toolkit.Experimental.UI;
@@ -30,6 +32,7 @@ public class FileSelector : MonoBehaviour
     public MixedRealityKeyboard keyboardComponent;
     public GameObject toggleKeyboard;
     public GameObject searchField;
+    public TMP_InputField searchfieldcomponent;
     public GameObject searchButton;
     public GridObjectCollection collection;
 
@@ -51,15 +54,17 @@ public class FileSelector : MonoBehaviour
     directortManager startDirectory;
     directortManager currentDirectory;
     Stack pathHistory = new Stack();
-    private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+    private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
 
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
+    public bool keyboardCommit = false;
 
     //Initializer, runs once.
     void Start()
     {
         keyboardComponent = keyboard.GetComponent<MixedRealityKeyboard>();
+        searchfieldcomponent = searchField.GetComponent<TMP_InputField>();
 
         uiButtons.add(backButton, "Back");
         uiButtons.add(noButton, "No");
@@ -77,7 +82,9 @@ public class FileSelector : MonoBehaviour
         */
         startDirectory = new directortManager(startPath, parent, prefab);
         startDirectory.updateCollection();
-        currentDirectory = startDirectory;       
+        currentDirectory = startDirectory;
+        keyboardComponent.OnCommitText.AddListener(() => keyboardCommit = true);
+        searchfieldcomponent.onValueChanged.AddListener((string data) => keyboardCommit = true);
     }
 
     void updatePrompt(GameObject prompt ,string text)
@@ -116,6 +123,13 @@ public class FileSelector : MonoBehaviour
                         keyboardComponent.HideKeyboard();
                 }
 
+                if (keyboardCommit == true)
+                {
+                    string temp = searchfieldcomponent.text;
+                    Debug.Log("Keyboard: " + temp);
+                    currentDirectory.search(temp);
+                    keyboardCommit = false;
+                }
                 else if (btn == "Back")
                 {
                     Debug.Log("Back!");
