@@ -139,14 +139,9 @@ public class FileSelector : MonoBehaviour
                 {
                     searchfieldcomponent.text = "";
                     Debug.Log("Back!");
-                    if (pathHistory.Count == 0)
+                    if (pathHistory.Count > 0)
                     {
-                        currentDirectory.setActive(false);
-                        currentDirectory = new directortManager(startPath, parent, prefab);
-                        currentDirectory.setActive(true);
-                    }
-                    else
-                    {
+                        currentDirectory.destroy();
                         currentDirectory.setActive(false);
                         currentDirectory = new directortManager(pathHistory.Pop().ToString(), parent, prefab);
                         currentDirectory.setActive(true);
@@ -185,6 +180,7 @@ public class FileSelector : MonoBehaviour
 
                     if (directoryButton["Type"] == "directory")
                     {
+                        currentDirectory.destroy();
                         searchfieldcomponent.text = "";
                         Debug.Log(directoryButton["Name"] + " : " + directoryButton["Type"]);
                         currentDirectory.setActive(false);

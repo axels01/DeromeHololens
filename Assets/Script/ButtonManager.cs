@@ -48,6 +48,12 @@ namespace ButtonManager
             return result;
         }
 
+        //Destroys local reference gameObject button when unused.
+        public void destroy()
+        {
+            Destroy(button);
+        }
+
         /*Attaches a listener to the Interactable of the gameObject, runs function in 
         pressState class on press event due to issue explained bellow. 
         */

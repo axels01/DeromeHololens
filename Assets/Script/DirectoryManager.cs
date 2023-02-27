@@ -97,6 +97,14 @@ namespace DirectoryManager
             updateCollection();
         }
 
+        //Called to by FileSelector.cs, loops all button class instances and runs their
+        //respective local destroy functions to remove unused gameObjects.
+        public void destroy()
+        {
+            foreach (button button in thisDirectory)
+                button.Button.destroy();
+        }
+
         /*Generates button class instances and adds them to a temporary list,
         one instance per file and subdirectory in directory, adds relevant
         informtion to instances, type, name and path.
