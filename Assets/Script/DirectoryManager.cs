@@ -1,5 +1,5 @@
 /*
- * 2023 Axel Östergren
+ * 2023 Axel Ã–stergren
  * axel.ostergren@student.hv.se
  */
 
@@ -62,8 +62,12 @@ namespace DirectoryManager
             updateCollection();
         }
 
-        /*Simple search function, called from generateEnviroment.cs, changes each gameObject button
+        /*Simple search function, called from Fileselector.cs, changes each gameObject button
         setActive acoordingly to whether it conforms to searchTerm or not.
+        *
+        * 2023 Arvid Albinsson
+        * arvid.albinsson@student.hv.se
+        * Got the input inputTMP to function with the script so the searchfunctionality is dynamic and it refreshes when you enter a folder.
         */
         public void search(string searchTerm)
         {
