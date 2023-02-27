@@ -1,6 +1,11 @@
 /*
- * 2023 Axel Östergren
+ * 2023 Axel Ã–stergren
  * axel.ostergren@student.hv.se
+ *
+ *
+ * 2023 Arvid Albinsson
+ * arvid.albinsson@student.hv.se
+ * Added the functionality for the searchfunction.
  */
 
 
