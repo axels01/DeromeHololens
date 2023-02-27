@@ -81,7 +81,7 @@ namespace ButtonManager
         Second if-statement creates a new button GameObject from prefab and a name under a parent gameObject.
         Includes some error catching aswell.
         */
-        public PressState buttonManagerBuilder(GameObject gameObject, GameObject parent = null, string name = null)
+        public PressState buttonManagerBuilder(GameObject gameObject, GameObject parent = null, string name = null, string type = null)
         {
             PressState pressState = new PressState();
             if (parent == null && name == null)

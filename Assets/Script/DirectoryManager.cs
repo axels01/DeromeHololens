@@ -166,7 +166,7 @@ namespace DirectoryManager
             foreach (button button in thisDirectory)
             {                
                 button.Button = new buttonManager();
-                button.PressState = button.Button.buttonManagerBuilder(prefab, parent, button.Name);
+                button.PressState = button.Button.buttonManagerBuilder(prefab, parent, button.Name, button.Type);
             }
             
             Debug.Log("DM constrctur done");
