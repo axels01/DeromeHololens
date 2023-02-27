@@ -111,6 +111,25 @@ namespace ButtonManager
                     {
                         tmpComponent.text = name;
                     }
+                    //Gets ButtonConfigHelper and sets Quad icon depending on type string
+                    ButtonConfigHelper bchComponent = button.GetComponent<ButtonConfigHelper>();
+                    if (bchComponent == null)
+                    {
+                        Debug.LogError("No ButtonConfigHelper component found");
+                    }
+                    else
+                    {
+                        if (type == "file")
+                        {
+                            bchComponent.SetQuadIconByName("LoweMiddleLayer_preview_rev_1");
+                            Debug.Log("File");
+                        }
+                        if (type == "directory")
+                        {
+                            Debug.Log("Directory");
+                            bchComponent.SetQuadIconByName("FabricFolder F0A9 (1)_preview_rev_1");
+                        }
+                    }
                     attachListener(pressState);
                 }
             }
