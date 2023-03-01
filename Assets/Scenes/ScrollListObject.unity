@@ -1954,6 +1954,7 @@ MonoBehaviour:
   keyboardComponent: {fileID: 0}
   toggleKeyboard: {fileID: 509344021}
   searchField: {fileID: 1948240079}
+  searchfieldcomponent: {fileID: 0}
   searchButton: {fileID: 0}
   collection: {fileID: 0}
   noButton: {fileID: 160818702}
@@ -1963,6 +1964,9 @@ MonoBehaviour:
   notDXFPrompt: {fileID: 558811626}
   continueButton: {fileID: 174292694}
   notDXFScreen: {fileID: 153958798}
+  selectedFile: 
+  done: 0
+  keyboardCommit: 0
 --- !u!1 &235549979
 GameObject:
   m_ObjectHideFlags: 0
@@ -3952,6 +3956,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b0eaa5b03b5cc4184c990c5981051f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileSelector: {fileID: 211649941}
   bytafilen: {fileID: 0}
   truss: {fileID: 548179060}
   timber: {fileID: 592824640}

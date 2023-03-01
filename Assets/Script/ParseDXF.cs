@@ -46,6 +46,8 @@ public class Entity
 
 public class ParseDXF : MonoBehaviour
 {
+    private bool done = false;
+    public GameObject fileSelector;
     public PressableButton bytafilen;
     public GameObject truss;
     public GameObject timber;
@@ -77,21 +79,24 @@ public class ParseDXF : MonoBehaviour
         }
     }
 
-    void TaskOnClick()
+    void TaskOnClick(string path)
     {
         lineRenderer = GetComponent<LineRenderer>();
         System.Globalization.CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
 
         try
         {
-         
+
 #if !UNITY_EDITOR && UNITY_WSA_10_0
-		Debug.Log("***********************************");
+		/*
+ * Debug.Log("***********************************");
 		Debug.Log("File Picker start.");
 		Debug.Log("***********************************");
 
 		UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
 		{
+        
+
 			var filepicker = new FileOpenPicker();
 			// filepicker.FileTypeFilter.Add("*");
 			filepicker.FileTypeFilter.Add(".dxf"); //changed from .txt
@@ -106,7 +111,7 @@ public class ParseDXF : MonoBehaviour
 				string path = (file != null) ? file.Path : "No data";
 				Debug.Log("Path: " + path);
 				Debug.Log("***********************************");
-
+                
 
 
             // Läs in DXF-filen rad-för-rad och leta upp rader av intresse.
@@ -115,7 +120,9 @@ public class ParseDXF : MonoBehaviour
             //string path = "C:/Data/Users/nictob/Documents/Derome/Job1/T04.dxf";
             //string path = "C:/Data/Users/hv-hololens-1@outlook.com/Documents/Derome/T04.dxf";
             //string path = Application.streamingAssetsPath + "/TrussFiles/T1Small.dxf"; 
-            //above works, to be changed for usb folder access 
+            //above works, to be changed for usb folder access
+*/
+
             using (StreamReader readFile = new StreamReader(path))
             {
                 List<List<string>> itemList = new List<List<string>>();
@@ -179,9 +186,17 @@ public class ParseDXF : MonoBehaviour
     void Start()
     {
 
-        PressableButton btn = bytafilen.GetComponent<PressableButton>();
-        btn.ButtonPressed.AddListener(TaskOnClick);
-        
+    }
+
+    private void Update()
+    {
+        //Debug.Log("Update in ParseDXF");
+        if (fileSelector.GetComponent<FileSelector>().done && !done)
+        {
+            done = true;
+            fileSelector.SetActive(false);
+            TaskOnClick(fileSelector.GetComponent<FileSelector>().selectedFile);
+        }
     }
 
     public static string GetApi(string ApiUrl)

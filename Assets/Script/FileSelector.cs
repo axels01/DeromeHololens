@@ -28,7 +28,7 @@ public class FileSelector : MonoBehaviour
 {
     //Button prefab.
     public GameObject prefab;
-
+    
     //General IO objects.
     public GameObject mainUI;
     public GameObject parent;
@@ -61,6 +61,8 @@ public class FileSelector : MonoBehaviour
     Stack pathHistory = new Stack();
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+    public string selectedFile = null;
+    public bool done = false;
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
     public bool keyboardCommit = false;
@@ -168,6 +170,7 @@ public class FileSelector : MonoBehaviour
                         {
                             useFileScreen.SetActive(true);
                             updatePrompt(useFilePrompt, "Open file \"" + directoryButton["Name"] + "\"?");
+                            selectedFile = directoryButton["Path"];
                             screen = "useFile";
                         }
                         else
@@ -191,15 +194,17 @@ public class FileSelector : MonoBehaviour
                 }
                 break;
             case "useFile":
-                if (uiButtons.update() == "No")
+                string button = uiButtons.update();
+                if (button == "No")
                 {
                     Debug.Log("no");
                     useFileScreen.SetActive(false);
                     mainUI.SetActive(true);
                     screen = "main";
                 }
-                if (uiButtons.update() == "Yes")
+                if (button  == "Yes")
                 {
+                    done = true;
                     Debug.Log("yes");
                 }
                 break;
