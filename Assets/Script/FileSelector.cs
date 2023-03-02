@@ -60,7 +60,7 @@ public class FileSelector : MonoBehaviour
     directortManager currentDirectory;
     Stack pathHistory = new Stack();
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
-    private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+    private string startPath = @"E:\";
     public string selectedFile = null;
     public bool done = false;
     UIButtons uiButtons = new UIButtons();

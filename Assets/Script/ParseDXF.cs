@@ -88,40 +88,10 @@ public class ParseDXF : MonoBehaviour
         {
 
 #if !UNITY_EDITOR && UNITY_WSA_10_0
-		/*
- * Debug.Log("***********************************");
-		Debug.Log("File Picker start.");
-		Debug.Log("***********************************");
+        Debug.Log("***********************************");
+        Debug.Log("File Picker start.");
+        Debug.Log("***********************************");
 
-		UnityEngine.WSA.Application.InvokeOnUIThread(async () =>
-		{
-        
-
-			var filepicker = new FileOpenPicker();
-			// filepicker.FileTypeFilter.Add("*");
-			filepicker.FileTypeFilter.Add(".dxf"); //changed from .txt
-
-			var file = await filepicker.PickSingleFileAsync();
-			UnityEngine.WSA.Application.InvokeOnAppThread(() => 
-			{
-				Debug.Log("***********************************");
-				string name = (file != null) ? file.Name : "No data";
-				Debug.Log("Name: " + name);
-				Debug.Log("***********************************");
-				string path = (file != null) ? file.Path : "No data";
-				Debug.Log("Path: " + path);
-				Debug.Log("***********************************");
-                
-
-
-            // Läs in DXF-filen rad-för-rad och leta upp rader av intresse.
-            // path: C:\GitHub\AutomaticTest\AutoTest\Assets\StreamingAssets\TrussFiles
-            // string path = "E:/789/T04.dxf";
-            //string path = "C:/Data/Users/nictob/Documents/Derome/Job1/T04.dxf";
-            //string path = "C:/Data/Users/hv-hololens-1@outlook.com/Documents/Derome/T04.dxf";
-            //string path = Application.streamingAssetsPath + "/TrussFiles/T1Small.dxf"; 
-            //above works, to be changed for usb folder access
-*/
 
             using (StreamReader readFile = new StreamReader(path))
             {
@@ -132,7 +102,7 @@ public class ParseDXF : MonoBehaviour
 
                 while ((line = readFile.ReadLine()) != null)
                 {
-                    // Modellerna "Virke/TIMBER" och "Anslutningspunkt/PLATE" är LWPOLYLINES.
+                    // Modellerna "Virke/TIMBER" och "Anslutningspunkt/PLATE" ar LWPOLYLINES.
                     if (line.Contains("LWPOLYLINE"))
                     {
                         flag = true;
@@ -142,8 +112,8 @@ public class ParseDXF : MonoBehaviour
                         flag = false;
                     }
 
-                    // Lägg till alla rader av LWPOLYLINES tills vi når dess end flag ("  0").
-                    // Lägg till LWPOLYLINES-rader i lista.
+                    // Lagg till alla rader av LWPOLYLINES tills vi nar dess end flag ("  0").
+                    // Lagg till LWPOLYLINES-rader i lista.
                     if (flag)
                     {
                         buffer.Add(line);
@@ -159,18 +129,14 @@ public class ParseDXF : MonoBehaviour
                             if (buffer.Contains("Anslutningspunkt") || buffer.Contains("PLATE")) { itemList.Add(buffer); }
                             buffer = new List<string>();
                         }
-                        // Om vi nått slutet av ENTITIES-sektionen -> avbryt while-loop.
+                        // Om vi natt slutet av ENTITIES-sektionen -> avbryt while-loop.
                         else if (line.Contains("ENDSEC")) { break; }
                     }
                 }
            
-                // Hantera inläst information.
+                // Hantera inlast information.
                 manageList(itemList); 
-            } 		
-
-			}, false);
-		}, false);
-
+            }         
 		
 		Debug.Log("***********************************");
 		Debug.Log("File Picker end.");
