@@ -92,7 +92,7 @@ namespace ButtonManager
             else if (parent != null && name != null)
             {
                 // Runs if the first argument is a prefab, i.e if it's called from DirectoryManager.cs
-                button = Instantiate(gameObject, new Vector3(0, 0, 0), Quaternion.identity, parent.transform);
+                button = Instantiate(gameObject, parent.transform);
                 Transform child = button.transform.Find("IconAndText");
                 Transform tmpObject = child.transform.Find("TextMeshPro");
                  

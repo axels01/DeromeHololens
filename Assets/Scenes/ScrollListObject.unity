@@ -2207,6 +2207,8 @@ MonoBehaviour:
   notDXFPrompt: {fileID: 558811626}
   continueButton: {fileID: 174292694}
   notDXFScreen: {fileID: 153958798}
+  selectedFile: 
+  done: 0
   keyboardCommit: 0
 --- !u!1 &235549979
 GameObject:
@@ -2727,7 +2729,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254985395}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.186, y: 0.114, z: 0.0529}
+  m_LocalPosition: {x: 0.186, y: 0.114, z: 0.0314}
   m_LocalScale: {x: 8.208403, y: 2.474336, z: 1.8249841}
   m_Children:
   - {fileID: 296851391}
@@ -4192,7 +4194,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17.000013, y: -0.50000453}
+  m_AnchoredPosition: {x: -17.000015, y: -0.5000038}
   m_SizeDelta: {x: -20, y: -12.999998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &453699178
@@ -4350,7 +4352,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Close
+  m_text: "St\xE4ng"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
@@ -4805,6 +4807,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b0eaa5b03b5cc4184c990c5981051f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fileSelector: {fileID: 211649941}
   bytafilen: {fileID: 0}
   truss: {fileID: 548179060}
   timber: {fileID: 592824640}
@@ -9759,7 +9762,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Filhanterare
+  m_text: "V\xE4lj fil"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
   m_sharedMaterial: {fileID: 21202819797275496, guid: 6a84f857bec7e7345843ae29404c57ce, type: 2}
@@ -11024,7 +11027,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484095287}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.0786, y: 0.0074, z: -0.4736}
+  m_LocalPosition: {x: -0.0786, y: -0.0032, z: -0.4736}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1801614333}
@@ -11340,7 +11343,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -17.000013, y: -0.50000453}
+  m_AnchoredPosition: {x: -17.000015, y: -0.5000038}
   m_SizeDelta: {x: -20, y: -12.999998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1539594537
@@ -11383,7 +11386,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: "S\xF6k..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -13015,7 +13018,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28328
+  m_Name: pb_Mesh28322
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14327,8 +14330,8 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1948240079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0.0157}
-  m_LocalScale: {x: 0.0008, y: 0.0006, z: 0.0004}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0167}
+  m_LocalScale: {x: 0.0009997599, y: 0.00074982, z: 0.00049987994}
   m_Children:
   - {fileID: 1227730370}
   - {fileID: 1539594536}
@@ -14338,8 +14341,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0187, y: 0.0745}
-  m_SizeDelta: {x: 186.59, y: 30}
+  m_AnchoredPosition: {x: -0.0191, y: 0.0687}
+  m_SizeDelta: {x: 144.79333, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1948240081
 MonoBehaviour:
@@ -14807,7 +14810,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1972672270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.078670025, y: -0.031600002, z: -0.47483075}
+  m_LocalPosition: {x: -0.078670025, y: -0.04220001, z: -0.4737}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1312706131}
