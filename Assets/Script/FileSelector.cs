@@ -59,10 +59,15 @@ public class FileSelector : MonoBehaviour
     directortManager startDirectory;
     directortManager currentDirectory;
     Stack pathHistory = new Stack();
+<<<<<<< Updated upstream
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     private string startPath = @"E:\";
     public string selectedFile = null;
     public bool done = false;
+=======
+    private string startPath = @"C:\Users\Henry\Desktop\";
+    //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+>>>>>>> Stashed changes
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
     public bool keyboardCommit = false;
@@ -82,6 +87,7 @@ public class FileSelector : MonoBehaviour
         //Sets the correct UI screen/view visible.
         useFileScreen.SetActive(false);
         notDXFScreen.SetActive(false);
+        notDXFPrompt.SetActive(false);
         mainUI.SetActive(true);
 
         /*Starts an instance of directoryManager for the start directory which is kept alive
@@ -176,6 +182,7 @@ public class FileSelector : MonoBehaviour
                         else
                         {
                             notDXFScreen.SetActive(true);
+                            notDXFPrompt.SetActive(true);
                             updatePrompt(notDXFPrompt, "File is not .dxf!");
                             screen = "notDXF";
                         }
