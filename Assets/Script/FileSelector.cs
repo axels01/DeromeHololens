@@ -62,9 +62,9 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
-    //private string startPath = @"C:\Users\Henry\Desktop\";
+    private string startPath = @"C:\Users\Henry\Desktop\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
-    private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
+    //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
     public bool keyboardCommit = false;
@@ -172,7 +172,7 @@ public class FileSelector : MonoBehaviour
                         if (directoryButton["Name"].EndsWith(".dxf", true, null))
                         {
                             useFileScreen.SetActive(true);
-                            updatePrompt(useFilePrompt, "Öppna fil: \"" + directoryButton["Name"] + "\"?");
+                            updatePrompt(useFilePrompt, "Öppna \"" + directoryButton["Name"] + "\"?");
                             selectedFile = directoryButton["Path"];
                             screen = "useFile";
                         }
@@ -180,7 +180,7 @@ public class FileSelector : MonoBehaviour
                         {
                             notDXFScreen.SetActive(true);
                             notDXFPrompt.SetActive(true);
-                            updatePrompt(notDXFPrompt, "Filen är inte .dxf!");
+                            updatePrompt(notDXFPrompt, "Vald fil är inte en .dxf!");
                             screen = "notDXF";
                         }
                     }
