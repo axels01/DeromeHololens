@@ -48,6 +48,7 @@ public class ParseDXF : MonoBehaviour
 {
     private bool done = false;
     public GameObject fileSelector;
+    public GameObject mainUI;
     public PressableButton bytafilen;
     public GameObject truss;
     public GameObject timber;
@@ -160,7 +161,7 @@ public class ParseDXF : MonoBehaviour
         if (fileSelector.GetComponent<FileSelector>().done && !done)
         {
             done = true;
-            fileSelector.SetActive(false);
+            mainUI.SetActive(false);
             TaskOnClick(fileSelector.GetComponent<FileSelector>().selectedFile);
         }
     }
