@@ -62,7 +62,7 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
-    private string startPath = @"C:\Users\Henry\Desktop\";
+    private string startPath = @"E:\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
@@ -122,15 +122,23 @@ public class FileSelector : MonoBehaviour
                 /*When going back in the directory tree, pathHistory.Count != 0 makes sure
             it cant go back past the start directroy. Sets the old instance of DirectoryManager
             to unactive before assigning currentDirectory a new instance of DirectoryManager.
-            */
+            */  searchfieldcomponent.Select();
+                searchfieldcomponent.ActivateInputField();
                 string btn = uiButtons.update();
                 if (btn == "ToggleKeyboard")
                 {
                     Debug.Log("Keyboard :)");
                     if (!keyboardComponent.Visible)
-                        keyboardComponent.ShowKeyboard("", false);
+                    {
+                        string temp;
+                        temp = searchfieldcomponent.text;
+                        searchfieldcomponent.text = "";
+                        keyboardComponent.ShowKeyboard(temp, false);
+                    }
                     else
+                    {
                         keyboardComponent.HideKeyboard();
+                    }
                 }
 
                 if (keyboardCommit == true)
