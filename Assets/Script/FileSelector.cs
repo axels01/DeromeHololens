@@ -63,13 +63,8 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
-<<<<<<< Updated upstream
-    private string startPath = @"E:\";
+    private string startPath = @"F:\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
-=======
-    //private string startPath = @"E:\";
-    private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
->>>>>>> Stashed changes
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
