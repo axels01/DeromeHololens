@@ -62,7 +62,7 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
-    private string startPath = @"C:\Users\Henry\Desktop\";
+    private string startPath = @"E:\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
