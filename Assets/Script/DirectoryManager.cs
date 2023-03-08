@@ -20,7 +20,9 @@ namespace DirectoryManager
     {
         private GameObject prefab;
         private GameObject parent;
+        private GameObject scroll;
         private GridObjectCollection collection;
+
         
         public string directoryPath { get; }
         private List<button> thisDirectory = new List<button>();
@@ -49,7 +51,6 @@ namespace DirectoryManager
         //Updates the grid collection, is called on visible changes
         public void updateCollection()
         {
-            collection = parent.GetComponent<GridObjectCollection>();
             collection.UpdateCollection();
         }
             
@@ -103,6 +104,7 @@ namespace DirectoryManager
         {
             foreach (button button in thisDirectory)
                 button.Button.destroy();
+            Destroy(scroll);
         }
 
         /*Generates button class instances and adds them to a temporary list,
@@ -154,11 +156,13 @@ namespace DirectoryManager
         Information regarind the issue:
         https://forum.unity.com/threads/onclick-addlistener-with-a-string-parameter.892210/
         */
-        public directortManager(string Path, GameObject Parent, GameObject Prefab)
+        public directortManager(string Path, GameObject Prefab, GameObject Scroll)
         {
+            scroll = Scroll;
             directoryPath = Path;
-            parent = Parent;
+            parent = Scroll.transform.GetChild(1).GetChild(0).gameObject;
             prefab = Prefab;
+            collection = parent.GetComponent<GridObjectCollection>();
             Debug.Log("Setup");
             
             thisDirectory = getFilesAndDirectories(directoryPath);
@@ -168,7 +172,7 @@ namespace DirectoryManager
                 button.Button = new buttonManager();
                 button.PressState = button.Button.buttonManagerBuilder(prefab, parent, button.Name, button.Type);
             }
-            
+            updateCollection();
             Debug.Log("DM constrctur done");
         }
     }

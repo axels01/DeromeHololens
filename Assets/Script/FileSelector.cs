@@ -28,6 +28,7 @@ public class FileSelector : MonoBehaviour
 {
     //Button prefab.
     public GameObject prefab;
+    public GameObject scrollPrefab;
     
     //General IO objects.
     public GameObject mainUI;
@@ -62,8 +63,13 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
+<<<<<<< Updated upstream
     private string startPath = @"E:\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+=======
+    //private string startPath = @"E:\";
+    private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
+>>>>>>> Stashed changes
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
     string screen = "main";
@@ -90,9 +96,7 @@ public class FileSelector : MonoBehaviour
         /*Starts an instance of directoryManager for the start directory which is kept alive
         as startDirectory, although the instance which will be used in browsing is currentDirectory.
         */
-        startDirectory = new directortManager(startPath, parent, prefab);
-        startDirectory.updateCollection();
-        currentDirectory = startDirectory;
+        currentDirectory = new directortManager(startPath, prefab, Instantiate(scrollPrefab, mainUI.transform));
         keyboardComponent.OnCommitText.AddListener(() => keyboardCommit = true);
         searchfieldcomponent.onValueChanged.AddListener((string data) => keyboardCommit = true);
     }
@@ -123,15 +127,23 @@ public class FileSelector : MonoBehaviour
             it cant go back past the start directroy. Sets the old instance of DirectoryManager
             to unactive before assigning currentDirectory a new instance of DirectoryManager.
             */
+                if (EventSystem.current.currentSelectedGameObject != searchField)
+                {
+                    searchfieldcomponent.Select();
+                    searchfieldcomponent.ActivateInputField();
+                    Debug.Log("Activated");
+                }
+
+
                 string btn = uiButtons.update();
-                if (btn == "ToggleKeyboard")
+                /*if (btn == "ToggleKeyboard")
                 {
                     Debug.Log("Keyboard :)");
                     if (!keyboardComponent.Visible)
                         keyboardComponent.ShowKeyboard("", false);
                     else
                         keyboardComponent.HideKeyboard();
-                }
+                }*/
 
                 if (keyboardCommit == true)
                 {
@@ -148,7 +160,7 @@ public class FileSelector : MonoBehaviour
                     {
                         currentDirectory.destroy();
                         currentDirectory.setActive(false);
-                        currentDirectory = new directortManager(pathHistory.Pop().ToString(), parent, prefab);
+                        currentDirectory = new directortManager(pathHistory.Pop().ToString(), prefab, Instantiate(scrollPrefab, mainUI.transform));
                         currentDirectory.setActive(true);
                     }
                 }
@@ -192,7 +204,7 @@ public class FileSelector : MonoBehaviour
                         Debug.Log(directoryButton["Name"] + " : " + directoryButton["Type"]);
                         currentDirectory.setActive(false);
                         pathHistory.Push(currentDirectory.directoryPath);
-                        currentDirectory = new directortManager(directoryButton["Path"], parent, prefab);
+                        currentDirectory = new directortManager(directoryButton["Path"], prefab, Instantiate(scrollPrefab, mainUI.transform));
                         currentDirectory.setActive(true);
                     }
                 }
