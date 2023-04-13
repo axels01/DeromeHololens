@@ -63,7 +63,7 @@ public class FileSelector : MonoBehaviour
     
     public string selectedFile = null;
     public bool done = false;
-    private string startPath = @"F:\";
+    private string startPath = @"E:\";
     //private string startPath = @"C:\Users\Axel\Desktop\DeromeTruss";
     //private string startPath = @"C:\Users\Arvid\OneDrive\Skrivbord\DeromeTruss";
     UIButtons uiButtons = new UIButtons();
@@ -126,8 +126,12 @@ public class FileSelector : MonoBehaviour
                 {
                     searchfieldcomponent.Select();
                     searchfieldcomponent.ActivateInputField();
+                    EventSystem.current.SetSelectedGameObject(searchField);
+                    toggleKeyboard.SetActive(false);
                     Debug.Log("Activated");
                 }
+                else
+                    toggleKeyboard.SetActive(true);
 
 
                 string btn = uiButtons.update();

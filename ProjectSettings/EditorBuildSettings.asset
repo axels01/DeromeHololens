@@ -32,9 +32,12 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ScrollListObject.unity
     guid: 3dbf60a19dc889544b8b106c3f66231a
+  - enabled: 1
+    path: Assets/MRTK/Examples/Demos/EyeTracking/Scenes/EyeTrackingDemo-03-Navigation.unity
+    guid: 5df475f0bf57b1f488d59e0e16040d9a
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 3d16cd16d4e39c2468c7b6a3d5dcd8a1, type: 2}
     com.unity.xr.openxr.settings4: {fileID: 11400000, guid: fd024c778d0bedd44b1a972547cc255e, type: 2}
